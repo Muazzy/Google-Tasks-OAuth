@@ -1,0 +1,21 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+header {
+    text-align: center;
+    background-color: #7142f4;
+    color: white;
+    padding: 20px;
+    border-radius: 6rem;
+    margin: 1rem 1rem;
+}
+
+.bg-container {
+    background: #fff;
+    padding: 10%;
+    border-radius: 1rem;
+}

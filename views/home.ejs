@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+
+<body>
+    <header class="custom-header">
+        <div class="left-section">
+            <h1>Google Tasks</h1>
+        </div>
+        <div class="right-section">
+            <div class="profile">
+                <img src="https://avatars.githubusercontent.com/u/69142783?v=4" alt="Profile Picture">
+                <div class="profile-info">
+                    <h3>Muazzam</h3>
+                    <h3>johndoe@example.com</h3>
+                </div>
+            </div>
+            <form action="/logout" method="post">
+                <button class="button" type="submit">Sign out</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="main-div">
+
+        <section class="tabs">
+            <button class="tab-button active">List 1</button>
+            <button class="tab-button">List 2</button>
+            <button class="tab-button">List 3</button>
+        </section>
+
+        <section class="todo-list">
+            <h2>List 1</h2>
+            <ul>
+                <li>
+                    <span class="task">Task 1</span>
+                    <button class="edit-button">Edit</button>
+                    <button class="delete-button">Delete</button>
+                </li>
+                <li>
+                    <span class="task">Task 2</span>
+                    <button class="edit-button">Edit</button>
+                    <button class="delete-button">Delete</button>
+                </li>
+                <!-- Add more tasks here -->
+            </ul>
+        </section>
+
+        <button class="add-button">Add Task</button>
+
+
+    </div>
+
+
+    <script>
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const todoLists = document.querySelectorAll('.todo-list');
+
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                // Remove the "active" class from all buttons and lists
+                tabButtons.forEach((btn) => btn.classList.remove('active'));
+                todoLists.forEach((list) => list.classList.remove('active'));
+
+                // Add the "active" class to the clicked button and corresponding list
+                button.classList.add('active');
+                todoLists[index].classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

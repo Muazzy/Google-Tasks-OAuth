@@ -1,0 +1,162 @@
+/* Make the profile picture rounded */
+.profile img {
+    border-radius: 50%;
+    max-width: 100px;
+    /* Adjust the size as needed */
+    height: auto;
+}
+
+/* Center-align elements horizontally */
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style tab buttons */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    background-color: #7142f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.tab-button.active {
+    background-color: #df7bce;
+}
+
+/* Style task list */
+.todo-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.todo-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.task {
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.edit-button,
+.delete-button {
+    padding: 5px 10px;
+    background-color: #7142f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    background-color: #df7bce;
+}
+
+/* Style Add Task button */
+.add-button {
+    padding: 10px 20px;
+    background-color: #7142f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.add-button:hover {
+    background-color: #df7bce;
+}
+
+
+/* Header Styles */
+.custom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #7142f4;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    width: 100%;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.left-section h1 {
+    margin-right: 20px;
+    font-size: 24px;
+}
+
+.right-section {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    margin-right: 20px;
+}
+
+.profile img {
+    border-radius: 50%;
+    max-width: 40px;
+    /* Adjust the size as needed */
+    height: auto;
+}
+
+.profile-info {
+    margin-left: 10px;
+    text-align: left;
+}
+
+.profile-info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Center-align content vertically */
+.main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+    /* Subtract header height */
+    margin-top: 60px;
+    /* Adjust margin to avoid overlapping header */
+}

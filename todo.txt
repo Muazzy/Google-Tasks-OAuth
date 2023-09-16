@@ -6,3 +6,24 @@
 
 //Optional
 save user info, tasks info in mongoDB
+
+
+
+///Technical step
+
+// authenticate user and get access token
+// store session id or idk like session token 
+
+
+//use that token to query tasks api from google
+
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
+make a simple homepage first (/)
+
+then check if the session is stored, it should show the tasks list and add, delete, edit ui
+
+if session is not stored it should redirect to login page etc
