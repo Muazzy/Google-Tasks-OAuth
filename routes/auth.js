@@ -1,119 +1,64 @@
-var express = require('express');
-var db = require('../db');
+const express = require('express')
+const passport = require('passport')
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 
-function fetchTodos(req, res, next) {
-    db.all('SELECT * FROM todos WHERE owner_id = ?', [
-        req.user.id
-    ], function (err, rows) {
-        if (err) { return next(err); }
+const router = express.Router()
 
-        var todos = rows.map(function (row) {
-            return {
-                id: row.id,
-                title: row.title,
-                completed: row.completed == 1 ? true : false,
-                url: '/' + row.id
-            }
-        });
-        res.locals.todos = todos;
-        res.locals.activeCount = todos.filter(function (todo) { return !todo.completed; }).length;
-        res.locals.completedCount = todos.length - res.locals.activeCount;
-        next();
-    });
-}
 
-const router = express.Router();
+router.get('/login', (req, res) => {
+    res.render("login", {
+        redirectUri: process.env.REDIRECT_URI
+    })
+})
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    if (!req.user) { return res.render('home'); }
-    next();
-}, fetchTodos, function (req, res, next) {
-    res.locals.filter = null;
-    res.render('index', { user: req.user });
+passport.use(new GoogleStrategy({
+    clientID: process.env.CLIENT_APP_ID,
+    clientSecret: process.env.CLIENT_APP_SECRET,
+    callbackURL: process.env.REDIRECT_URI,
+    scope:
+        ['email', 'profile', 'https://www.googleapis.com/auth/tasks'],
+    passReqToCallback: true,
+},
+    function (request, accessToken, refreshToken, profile, done) {
+
+        // console.log('access token is', accessToken)
+        // console.log('refresh token is', refreshToken)
+
+
+        process.nextTick(function () {
+            return done(null, accessToken, refreshToken, profile);
+
+        })
+    }
+));
+
+
+// and we will be redirected back here after we try to login/signin or whatever
+router.get(process.env.REDIRECT_URI, passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+}))
+
+
+router.post('/logout', function (req, res, next) {
+    //to terminate an existing login session
+    req.logout(function (err) {
+        if (err) { console.log(err) }
+        res.redirect('/')
+    })
+})
+
+
+passport.serializeUser(function (user, done) {
+    // console.log('serialized user: ', user)
+    done(null, user);
 });
 
-router.get('/active', fetchTodos, function (req, res, next) {
-    res.locals.todos = res.locals.todos.filter(function (todo) { return !todo.completed; });
-    res.locals.filter = 'active';
-    res.render('index', { user: req.user });
+passport.deserializeUser(function (user, done) {
+    // console.log('de-serialized user: ', user)
+
+    done(null, user);
 });
 
-router.get('/completed', fetchTodos, function (req, res, next) {
-    res.locals.todos = res.locals.todos.filter(function (todo) { return todo.completed; });
-    res.locals.filter = 'completed';
-    res.render('index', { user: req.user });
-});
 
-router.post('/', function (req, res, next) {
-    req.body.title = req.body.title.trim();
-    next();
-}, function (req, res, next) {
-    if (req.body.title !== '') { return next(); }
-    return res.redirect('/' + (req.body.filter || ''));
-}, function (req, res, next) {
-    db.run('INSERT INTO todos (owner_id, title, completed) VALUES (?, ?, ?)', [
-        req.user.id,
-        req.body.title,
-        req.body.completed == true ? 1 : null
-    ], function (err) {
-        if (err) { return next(err); }
-        return res.redirect('/' + (req.body.filter || ''));
-    });
-});
-
-router.post('/:id(\\d+)', function (req, res, next) {
-    req.body.title = req.body.title.trim();
-    next();
-}, function (req, res, next) {
-    if (req.body.title !== '') { return next(); }
-    db.run('DELETE FROM todos WHERE id = ? AND owner_id = ?', [
-        req.params.id,
-        req.user.id
-    ], function (err) {
-        if (err) { return next(err); }
-        return res.redirect('/' + (req.body.filter || ''));
-    });
-}, function (req, res, next) {
-    db.run('UPDATE todos SET title = ?, completed = ? WHERE id = ? AND owner_id = ?', [
-        req.body.title,
-        req.body.completed !== undefined ? 1 : null,
-        req.params.id,
-        req.user.id
-    ], function (err) {
-        if (err) { return next(err); }
-        return res.redirect('/' + (req.body.filter || ''));
-    });
-});
-
-router.post('/:id(\\d+)/delete', function (req, res, next) {
-    db.run('DELETE FROM todos WHERE id = ? AND owner_id = ?', [
-        req.params.id,
-        req.user.id
-    ], function (err) {
-        if (err) { return next(err); }
-        return res.redirect('/' + (req.body.filter || ''));
-    });
-});
-
-router.post('/toggle-all', function (req, res, next) {
-    db.run('UPDATE todos SET completed = ? WHERE owner_id = ?', [
-        req.body.completed !== undefined ? 1 : null,
-        req.user.id
-    ], function (err) {
-        if (err) { return next(err); }
-        return res.redirect('/' + (req.body.filter || ''));
-    });
-});
-
-router.post('/clear-completed', function (req, res, next) {
-    db.run('DELETE FROM todos WHERE owner_id = ? AND completed = ?', [
-        req.user.id,
-        1
-    ], function (err) {
-        if (err) { return next(err); }
-        return res.redirect('/' + (req.body.filter || ''));
-    });
-});
-
-module.exports = router;
+module.exports = router
