@@ -16,67 +16,90 @@
         </div>
         <div class="right-section">
             <div class="profile">
-                <img src=<%=user.picture %> alt="Profile Picture">
-                <div class="profile-info">
-                    <h3>
-                        <%= user.name %>
-                    </h3>
-                    <h3>
-                        <%= user.email %>
-                    </h3>
-                </div>
+                <% if (locals.user) { %>
+                    <img src=<%=user.picture %> alt="Profile Picture">
+                    <div class="profile-info">
+                        <h3>
+                            <%= user.name %>
+                        </h3>
+                        <h3>
+                            <%= user.email %>
+                        </h3>
+                    </div>
+                    <% } %>
             </div>
             <form action="/logout" method="post">
-                <button class="button" type="submit">Sign out</button>
+                <button class="signout-button" type="submit">Sign out</button>
             </form>
         </div>
     </header>
 
     <div class="main-div">
+        <% if (!locals.taskLists || locals.taskLists.length===0) { %>
+            <h1>No task List</h1>
+            <%} else { %>
+                <section class="tabs">
+                    <% taskLists.forEach(element=> { %>
 
-        <section class="tabs">
-            <button class="tab-button active">List 1</button>
-            <button class="tab-button">List 2</button>
-            <button class="tab-button">List 3</button>
-        </section>
+                        <% if (selectedListID===element.id ) { %>
+                            <form action="/taskLists/<%= element.id %>/tasks" method="get">
+                                <button class="tab-button active">
+                                    <%= element.title %>
+                                </button>
+                            </form>
 
-        <section class="todo-list">
-            <h2>List 1</h2>
-            <ul>
-                <li>
-                    <span class="task">Task 1</span>
-                    <button class="edit-button">Edit</button>
-                    <button class="delete-button">Delete</button>
-                </li>
-                <li>
-                    <span class="task">Task 2</span>
-                    <button class="edit-button">Edit</button>
-                    <button class="delete-button">Delete</button>
-                </li>
-                <!-- Add more tasks here -->
-            </ul>
-        </section>
+                            <%} else { %>
+                                <form action="/taskLists/<%= element.id %>/tasks" method="get">
+                                    <button class="tab-button">
+                                        <%= element.title %>
+                                    </button>
+                                </form>
+                                <% } %>
 
-        <button class="add-button">Add Task</button>
+                                    <% }) %>
+                </section>
+                <% if (!locals.tasks || locals.tasks.length===0){ %>
+                    <br>
+                    <br>
+                    <h2>No tasks in this list</h2>
+                    <br>
+                    <%} else { %>
+                        <section class="todo-list">
+                            <ul>
+                                <% tasks.forEach(task=> { %>
+                                    <form action="/taskLists/<%= selectedListID %>/tasks/<%= task.id %>" method="get">
+                                        <button>
+                                            <li class="task-item">
+                                                <span class="task">
+                                                    <%= task.title %>
+                                                </span>
+                                            </li>
+                                        </button>
+                                    </form>
 
-
+                                    <% }) %>
+                            </ul>
+                        </section>
+                        <% } %>
+                            <% } %>
+                                <!-- Add Task Form -->
+                                <div id="add-task-form" style="display: none;">
+                                    <form action="/taskLists/<%= selectedListID %>/tasks" method="post"
+                                        enctype="application/x-www-form-urlencoded">
+                                        <input type="text" name="title" placeholder="Task Title" required>
+                                        <input type="date" name="due" required>
+                                        <button type="submit">Add</button>
+                                    </form>
+                                </div>
+                                <button class="add-button" id="show-add-task-form">Add Task</button>
     </div>
-
-
     <script>
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const todoLists = document.querySelectorAll('.todo-list');
+        // JavaScript to show/hide the Add Task form when the button is clicked
+        const showAddTaskButton = document.getElementById('show-add-task-form');
+        const addTaskForm = document.getElementById('add-task-form');
 
-        tabButtons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                // Remove the "active" class from all buttons and lists
-                tabButtons.forEach((btn) => btn.classList.remove('active'));
-                todoLists.forEach((list) => list.classList.remove('active'));
-
-                // Add the "active" class to the clicked button and corresponding list
-                button.classList.add('active');
-                todoLists[index].classList.add('active');
-            });
+        showAddTaskButton.addEventListener('click', () => {
+            addTaskForm.style.display = 'block';
         });
     </script>
 </body>

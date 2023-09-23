@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/task.css">
+</head>
+
+<body>
+    <header class="custom-header">
+        <h1>Google Tasks</h1>
+    </header>
+
+    <div class="main-div">
+        <section class="task-details">
+            <h2>Task Details</h2>
+            <div class="task-item">
+                <h3>Title:</h3>
+                <p>
+                    <%= task?.title %>
+                </p>
+            </div>
+            <div class="task-item">
+                <h3>Updated:</h3>
+                <p>
+                    <%= task?.updated ?? '' %>
+                </p>
+            </div>
+            <div class="task-item">
+                <h3>Notes:</h3>
+                <p>
+                    <%= task?.notes %>
+                </p>
+            </div>
+            <div class="task-item">
+                <h3>Status:</h3>
+                <p>
+                    <%= task?.status ?? '' %>
+                </p>
+            </div>
+            <div class="task-item">
+                <h3>Due Date:</h3>
+                <p>
+                    <%= task?.due ?? '' %>
+                </p>
+            </div>
+        </section>
+
+        <div class="buttons">
+            <form action="/taskLists/<%= selectedListID %>/tasks/<%= task?.id %>?_method=DELETE" method="POST">
+                <button class="delete-button">Delete Task</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

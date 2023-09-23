@@ -23,8 +23,8 @@
 
 .tab-button {
     padding: 10px 20px;
-    background-color: #7142f4;
-    color: white;
+    color: #7142f4;
+    background-color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -32,8 +32,15 @@
     font-weight: bold;
 }
 
+.tab-button:hover {
+    background-color: #c997f1;
+    color: white;
+}
+
 .tab-button.active {
-    background-color: #df7bce;
+    background-color: #7142f4;
+    color: white;
+
 }
 
 /* Style task list */
@@ -53,10 +60,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.task {
-    flex-grow: 1;
-    padding: 0 10px;
-}
+
 
 .edit-button,
 .delete-button {
@@ -157,6 +161,44 @@
     justify-content: center;
     height: calc(100vh - 60px);
     /* Subtract header height */
-    margin-top: 60px;
-    /* Adjust margin to avoid overlapping header */
+    /* margin-top: 60px; */
+    margin: 1rem 2rem;
+
+}
+
+
+
+.signout-button {
+    display: inline-block;
+    padding: 10px 40px;
+    background-color: #DF7BCE;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.signout-button:hover {
+    background-color: #E993DB;
+    cursor: pointer;
+}
+
+.task-item {
+    margin: 2rem;
+    background: #c6b1ff;
+}
+
+.task-item:hover {
+    cursor: pointer;
+    background: #e0d5ff;
+    color: #000000;
+}
+
+.task {
+    flex-grow: 1;
+    padding: 1rem 2rem;
 }
