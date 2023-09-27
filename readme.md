@@ -1,13 +1,13 @@
-<h1>Manage Google Task</h1>
+# Manage Google Task
 
-<h2>What you can do with it</h2>
+## What you can do with it
 <ul>
 <li>sign in with your google account</li>
 <li>switch between your google task lists</li>
 <li>view, create, delete tasks</li>
 </ul>
 
-<h2>What i learned</h2>
+## What i learned
 <ul>
 <li>OAuth/OAuth2</li>
 <li>Passport.js</li>
@@ -17,11 +17,11 @@
 <li>MVC pattern</li>
 </ul>
 
-<h2>Next Steps</h2>
+## Next Steps
 - [ ] add & delete a taskList
 - [ ] update a task
 - [ ] error handling and logging middleware
 
-<h3>Optional</h3>
+### Optional
 - [ ] improve the ui/frontend
 - [ ] save user info, tasks info in mongoDB
