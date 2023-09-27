@@ -18,13 +18,10 @@
 </ul>
 
 <h2>Next Steps</h2>
-<input type="checkbox" disabled /> add & delete a taskList <br>
-<input type="checkbox" disabled /> update a task <br>
-<input type="checkbox" disabled /> error handling and logging middleware <br>
+- [ ] add & delete a taskList
+- [ ] update a task
+- [ ] error handling and logging middleware
 
 <h3>Optional</h3>
-<input type="checkbox" disabled /> improve the ui/frontend <br>
-<input type="checkbox" disabled /> save user info, tasks info in mongoDB <br>
-
-- [x] checked
-- [ ] not checked
+- [ ] improve the ui/frontend
+- [ ] save user info, tasks info in mongoDB
