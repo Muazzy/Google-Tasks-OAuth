@@ -12,7 +12,6 @@ async function getUserInfo(accessToken) {
         return new User(name, email, picture);
     } catch (error) {
         console.log(error)
-        // throw new Error('Failed to fetch user info');
     }
 }
 

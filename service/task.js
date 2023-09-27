@@ -1,10 +1,11 @@
 const Task = require('../model/task')
 const axios = require('axios')
 
+const baseURL = "https://tasks.googleapis.com/tasks/v1/lists"
 
 async function getAllTasks(accessToken, taskListID) {
     try {
-        const response = await axios.get(`https://tasks.googleapis.com/tasks/v1/lists/${taskListID}/tasks`, {
+        const response = await axios.get(`${baseURL}/${taskListID}/tasks`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
             },
@@ -32,7 +33,7 @@ async function getAllTasks(accessToken, taskListID) {
 
 async function getTask(accessToken, taskListID, taskID) {
     try {
-        const response = await axios.get(`https://tasks.googleapis.com/tasks/v1/lists/${taskListID}/tasks/${taskID}`, {
+        const response = await axios.get(`${baseURL}/${taskListID}/tasks/${taskID}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
             }
@@ -48,7 +49,7 @@ async function getTask(accessToken, taskListID, taskID) {
 
 async function deleteTask(accessToken, taskListID, taskID) {
     try {
-        const response = await axios.delete(`https://tasks.googleapis.com/tasks/v1/lists/${taskListID}/tasks/${taskID}`, {
+        const response = await axios.delete(`${baseURL}/${taskListID}/tasks/${taskID}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
             }
@@ -65,7 +66,7 @@ async function deleteTask(accessToken, taskListID, taskID) {
 async function addTask(accessToken, taskListID, body) {
     try {
         if (!body || !body.title) return
-        const response = await axios.post(`https://tasks.googleapis.com/tasks/v1/lists/${taskListID}/tasks`, {
+        const response = await axios.post(`${baseURL}/${taskListID}/tasks`, {
             title: body.title,
             due: body.due ?? '',
         }, {
